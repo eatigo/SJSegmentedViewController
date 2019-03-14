@@ -32,10 +32,12 @@ open class SJSegmentTab: UIView {
 	var didSelectSegmentAtIndex: DidSelectSegmentAtIndex?
 	var isSelected = false {
 		didSet {
-			button.isSelected = isSelected
+            button.isSelected = isSelected
 		}
 	}
 
+    private weak var customView: UIView?
+    
 	convenience init(title: String) {
 		self.init(frame: CGRect.zero)
         setTitle(title)
@@ -44,6 +46,8 @@ open class SJSegmentTab: UIView {
 	convenience init(view: UIView) {
 		self.init(frame: CGRect.zero)
 
+        customView = view
+        
 		insertSubview(view, at: 0)
 		view.removeConstraints(view.constraints)
 		addConstraintsToView(view)
@@ -83,6 +87,16 @@ open class SJSegmentTab: UIView {
         
         button.setTitle(title, for: .normal)
     }
+    
+    open func setAttributedTitle(_ attributedString: NSAttributedString?) {
+        
+        button.setAttributedTitle(attributedString, for: .normal)
+    }
+    
+    open func setSelectedAttributedTitle(_ attributedString: NSAttributedString?) {
+        
+        button.setAttributedTitle(attributedString, for: .selected)
+    }
 
 	open func titleColor(_ color: UIColor) {
 
@@ -109,4 +123,24 @@ open class SJSegmentTab: UIView {
 			didSelectSegmentAtIndex!(self, index, true)
 		}
 	}
+}
+
+extension SJSegmentTab {
+    func update(_ titleView: UIView) {
+        customView?.removeFromSuperview()
+        customView = titleView
+        
+        insertSubview(titleView, at: 0)
+        titleView.removeConstraints(titleView.constraints)
+        addConstraintsToView(titleView)
+    }
+    
+    func update(_ attributedTitle: NSAttributedString?, attributedSelectedTitle: NSAttributedString?) {
+        setAttributedTitle(attributedTitle)
+        setSelectedAttributedTitle(attributedSelectedTitle)
+    }
+    
+    func update(_ title: String) {
+        setTitle(title)
+    }
 }

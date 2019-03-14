@@ -282,8 +282,8 @@ import UIKit
     }
     
     open weak var delegate:SJSegmentedViewControllerDelegate?
-    var segmentedScrollView = SJSegmentedScrollView(frame: CGRect.zero)
-    var segmentScrollViewTopConstraint: NSLayoutConstraint?
+    open var segmentedScrollView = SJSegmentedScrollView(frame: CGRect.zero)
+    open var segmentScrollViewTopConstraint: NSLayoutConstraint?
     
     
     /**
@@ -358,7 +358,7 @@ import UIKit
     /**
      * Set the default values for the segmented scroll view.
      */
-    func setDefaultValuesToSegmentedScrollView() {
+    open func setDefaultValuesToSegmentedScrollView() {
         
         segmentedScrollView.selectedSegmentViewColor    = selectedSegmentViewColor
         segmentedScrollView.selectedSegmentViewHeight   = selectedSegmentViewHeight
@@ -378,7 +378,7 @@ import UIKit
     /**
      * Private method for adding the segmented scroll view.
      */
-    func addSegmentedScrollView() {
+    open func addSegmentedScrollView() {
         
         let topSpacing = SJUtil.getTopSpacing(self)
         segmentedScrollView.topSpacing = topSpacing
@@ -425,7 +425,7 @@ import UIKit
      
      - parameter headerViewController: Header ViewController.
      */
-    func addHeaderViewController(_ headerViewController: UIViewController) {
+    open func addHeaderViewController(_ headerViewController: UIViewController) {
         
         addChild(headerViewController)
         segmentedScrollView.addHeaderView(headerViewController.view)
@@ -437,7 +437,7 @@ import UIKit
      
      - parameter contentControllers: array of ViewControllers
      */
-    func addContentControllers(_ contentControllers: [UIViewController]) {
+    open func addContentControllers(_ contentControllers: [UIViewController]) {
         segmentedScrollView.addSegmentView(contentControllers, frame: view.bounds)
         
         var index = 0
@@ -468,7 +468,7 @@ import UIKit
     /**
      * Method for loading content ViewControllers and header ViewController
      */
-    func loadControllers() {
+    open func loadControllers() {
         
         if headerViewController == nil  {
             headerViewController = UIViewController()
@@ -487,5 +487,11 @@ import UIKit
         delegate?.didMoveToPage?(segmentControllers[0],
                                  segment: segment,
                                  index: 0)
+    }
+}
+
+extension SJSegmentedViewController {
+    open func reloadHeaders() {
+        segmentedScrollView.updateSegmentView(segmentControllers)
     }
 }

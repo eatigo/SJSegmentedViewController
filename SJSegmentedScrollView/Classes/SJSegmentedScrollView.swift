@@ -22,7 +22,7 @@
 
 import UIKit
 
-class SJSegmentedScrollView: UIScrollView {
+open class SJSegmentedScrollView: UIScrollView {
     
     var segmentView: SJSegmentView?
     
@@ -138,7 +138,7 @@ class SJSegmentedScrollView: UIScrollView {
         
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -377,7 +377,7 @@ class SJSegmentedScrollView: UIScrollView {
         }
     }
 
-	override func observeValue(forKeyPath keyPath: String?,
+	override open func observeValue(forKeyPath keyPath: String?,
 	                           of object: Any?,
 	                           change: [NSKeyValueChangeKey : Any]?,
 	                           context: UnsafeMutableRawPointer?) {
@@ -412,5 +412,11 @@ class SJSegmentedScrollView: UIScrollView {
         observing = false
         scrollView.contentOffset = point
         observing = true
+    }
+}
+
+extension SJSegmentedScrollView {
+    func updateSegmentView(_ controllers: [UIViewController]) {
+        segmentView?.update(controllers)
     }
 }

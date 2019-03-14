@@ -361,3 +361,17 @@ class SJSegmentView: UIScrollView {
         }
     }
 }
+
+extension SJSegmentView {
+    func update(_ controllers: [UIViewController]) {
+        for (segment, controller) in zip(segments, controllers) {
+            if let attributable = controller as? SJSegmentViewAttributable  {
+                segment.update(attributable.attributedTitle, attributedSelectedTitle: attributable.attributedSelectedTitle)
+            } else if let titleView = controller.navigationItem.titleView {
+                segment.update(titleView)
+            } else if let title = controller.title {
+                segment.update(title)
+            }
+        }
+    }
+}
