@@ -336,7 +336,7 @@ class SJSegmentView: UIScrollView {
                     let segmentScrollWidth = contentSize.width - bounds.width
                     let contentScrollWidth = scrollView!.contentSize.width - scrollView!.bounds.width
                     changeOffset = segmentScrollWidth / contentScrollWidth
-                    contentOffset.x = (scrollView?.contentOffset.x)! * changeOffset
+                    contentOffset.x = (scrollView?.contentOffset.x)! * (changeOffset.isNaN ? 0 : changeOffset)
                 }
             }
         }
